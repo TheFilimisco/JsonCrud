@@ -1,5 +1,7 @@
 import  json
 
+from setuptools.command.egg_info import write_file
+
 from utils import simplify
 
 with open("data/products.json", mode="r", encoding="utf-8") as file:
@@ -18,10 +20,15 @@ def info(data):
     print(len(data["products"]))
     print(len(data["products"][0]))
     print(data.keys())
+    print(data["products"][0].keys())
 
 info(data)
 
-data_simp = simplify(data, None, None)
+attributes = ["id","title","description","category","price"]
+data_simp = simplify(data, "products", attributes)
 
 info(data_simp)
+
+with open("data/products_simplify.json", mode="w", encoding="utf-8") as write_file:
+    json.dump(data_simp, write_file, indent=4)
 
