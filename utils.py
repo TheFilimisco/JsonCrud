@@ -1,5 +1,4 @@
 
-
 def simplify(data, field, data_filer=None):
     # light version of products
     #data[field]

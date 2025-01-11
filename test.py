@@ -1,7 +1,5 @@
 import  json
 
-from setuptools.command.egg_info import write_file
-
 from utils import simplify
 
 with open("data/products.json", mode="r", encoding="utf-8") as file:
