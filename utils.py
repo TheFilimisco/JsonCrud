@@ -19,3 +19,14 @@ def simplify(data, field, data_filer=None):
             items.append(new_dict)
     new_data = {field:items}
     return new_data
+
+
+
+def simplify2(data, field, data_filter=None):
+    for item in data[field]:
+        keys = list(item.keys())
+        for key in keys:
+            if key not in data_filter:
+                del item[key]
+
+    return data

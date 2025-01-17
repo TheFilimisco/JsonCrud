@@ -2,7 +2,7 @@ import  json
 
 from utils import simplify
 
-with open("data/products.json", mode="r", encoding="utf-8") as file:
+with open("../data/products.json", mode="r", encoding="utf-8") as file:
     data = json.load(file)
 
 #print(data["name"])
@@ -27,6 +27,6 @@ data_simp = simplify(data, "products", attributes)
 
 info(data_simp)
 
-with open("data/products_simplify.json", mode="w", encoding="utf-8") as write_file:
+with open("../data/products_simplify.json", mode="w", encoding="utf-8") as write_file:
     json.dump(data_simp, write_file, indent=4)
 
