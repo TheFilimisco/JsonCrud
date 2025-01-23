@@ -7,7 +7,6 @@ def read_all():
     return list(DATA.values())
 
 def read_item(item_id):
-    #TODO:
     if item_id not in DATA:
         raise KeyError("id not found")
     return DATA[item_id]
@@ -36,6 +35,25 @@ def update(item):
         raise KeyError("id not found")
     DATA[id] = item
     return DATA[id]
+
+def avg_price():
+    pass
+
+def count_category(category:str):
+    #count category
+    #5 "beauty"
+    pass
+
+# Sobre el original
+
+def avg_rating() -> list[float]:
+    pass
+
+def max_stock() -> tuple[int,int]:
+    pass
+
+def count_tags() -> dict[str,int]:
+    pass
 
 
 
