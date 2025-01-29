@@ -1,4 +1,4 @@
-from crud import read_all, read_item, create, delete, update
+from crud import read_all, read_item, create, delete, update, avg_price,count_category
 
 # print(read_all())
 # print(read_item(1))
@@ -18,10 +18,16 @@ update_product = {
     "price": 20
 }
 
-print(create(new_product))
-print(create(new_product))
-print(read_all())
-delete(31)
-print(read_all())
-print(update(update_product))
-print(read_all())
+# print(create(new_product))
+# print(create(new_product))
+# print(read_all())
+# delete(31)
+# print(read_all())
+# print(update(update_product))
+# print(read_all())
+
+print(avg_price())
+
+print(count_category("beauty"))
+
+

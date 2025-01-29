@@ -1,5 +1,6 @@
 from database import read_db
 
+
 DATA_PATH = "../data/products_simplify.json"
 DATA = read_db(DATA_PATH,"products")
 
@@ -37,12 +38,19 @@ def update(item):
     return DATA[id]
 
 def avg_price():
-    pass
+    accum = 0
+    counter = 0
+    for value in DATA.values():
+        counter+=1
+        accum+=value["price"]
+    return accum/counter
 
 def count_category(category:str):
-    #count category
-    #5 "beauty"
-    pass
+    counter = 0
+    for item in DATA.values():
+        if category == item["category"]:
+            counter+=1
+    return counter
 
 # Sobre el original
 
@@ -53,6 +61,19 @@ def max_stock() -> tuple[int,int]:
     pass
 
 def count_tags() -> dict[str,int]:
+    pass
+
+def low_stock(threshold: int) -> list[dict]:
+    # items_simpl when stock <= threshold
+    # return title, description, category, price, stock
+    pass
+
+def reviews(reviewer_name: str) -> list[dict]:
+    # return a list of reviews by reviewer
+    pass
+
+def reviews_rating(reviewer_name: str) -> float:
+    # return avg review ratings
     pass
 
 
