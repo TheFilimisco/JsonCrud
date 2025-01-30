@@ -1,4 +1,4 @@
-from crud import read_all, read_item, create, delete, update, avg_price,count_category
+from crud import read_all, read_item, create, delete, update, avg_price,count_category, avg_rating, max_stock
 
 # print(read_all())
 # print(read_item(1))
@@ -26,8 +26,11 @@ update_product = {
 # print(update(update_product))
 # print(read_all())
 
-print(avg_price())
+#print(avg_price())
 
-print(count_category("beauty"))
+#print(count_category("beauty"))
 
+#print(print_dict_original())
 
+print(avg_rating())
+print(max_stock())

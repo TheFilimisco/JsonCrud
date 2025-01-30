@@ -11,5 +11,6 @@ def read_db_list(data_path,field):
         data = json.load(file)
     return data[field]
 
+
 def save_db(data_path, data):
     pass

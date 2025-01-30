@@ -1,21 +1,33 @@
+from typing import List, Any
+
 from database import read_db
 
 
 DATA_PATH = "../data/products_simplify.json"
 DATA = read_db(DATA_PATH,"products")
 
-def read_all():
+DATA_PATH_ORIGINAL = "../data/products.json"
+DATA_ORIGINAL = read_db(DATA_PATH_ORIGINAL, "products")
+
+
+def read_all() -> list:
     return list(DATA.values())
 
-def read_item(item_id):
+def read_item(item_id: dict) -> dict:
     if item_id not in DATA:
         raise KeyError("id not found")
     return DATA[item_id]
 
-def create(item):
-    add_id ={"id":len(DATA.keys())+1}
+def create(item: dict):
+    add_id ={"id": len(DATA.keys())+1}
+    # new_id = max(list(DATA.keys())) + 1
     add_id.update(item)
+    # item["id"] = len(DATA.keys())+1
     DATA[len(DATA.keys())+1] = add_id
+
+    # DATA[new_id] = item
+
+    # save
     return DATA[len(DATA.keys())]
     # if item in DATA:
     #     raise KeyError("This item exist!")
@@ -28,6 +40,7 @@ def create(item):
 
 def delete(id):
     DATA.pop(id)
+    # del DATA[id]
     return print("Successful")
 
 def update(item):
@@ -54,14 +67,24 @@ def count_category(category:str):
 
 # Sobre el original
 
-def avg_rating() -> list[float]:
+def avg_rating():
+    # counter = 0
+    # accum = 0
+    # for item in DATA_ORIGINAL.values():
+    #     accum+=item["rating"]
+    #     counter+=1
+    # return accum/counter
     pass
 
 def max_stock() -> tuple[int,int]:
-    pass
+    ident = -1
+    new_max_stock = float("-inf")
+    for item in DATA_ORIGINAL.values():
+        if item["stock"] > new_max_stock:
+            new_max_stock = item["stock"]
+            ident = item["id"]
+    return ident,new_max_stock
 
-def count_tags() -> dict[str,int]:
-    pass
 
 def low_stock(threshold: int) -> list[dict]:
     # items_simpl when stock <= threshold
