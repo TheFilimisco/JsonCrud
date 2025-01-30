@@ -2,8 +2,6 @@ from typing import List, Any
 
 from database import read_db
 
-
-
 #Read of Simplify products
 DATA_PATH = "../data/products_simplify.json"
 DATA = read_db(DATA_PATH,"products")
@@ -12,13 +10,17 @@ DATA = read_db(DATA_PATH,"products")
 DATA_PATH_ORIGINAL = "../data/products.json"
 DATA_ORIGINAL = read_db(DATA_PATH_ORIGINAL, "products")
 
+#Read of Users
+DATA_PATH_USERS = "../data/users.json"
+DATA_USERS = read_db(DATA_PATH_USERS, "users")
+
 
 
 #Simplify Product
 def read_all() -> list:
     return list(DATA.values())
 
-def read_item(item_id: dict) -> dict:
+def read_item(item_id: int) -> dict:
     if item_id not in DATA:
         raise KeyError("id not found")
     return DATA[item_id]
@@ -66,8 +68,8 @@ def count_category(category:str):
             counter+=1
     return counter
 
-# About the original Data
 
+# About the original Data
 def count_tags() -> dict[str, int]:
     tag_counter = {}
     for item in DATA_ORIGINAL.values():
@@ -86,6 +88,13 @@ def avg_rating() -> list[float]:
             rating_avg+= review["rating"]
         avgs.append(rating_avg/len(item["reviews"]))
     return avgs
+
+def dates() -> list[str]:
+    list_date = []
+    for item in DATA_ORIGINAL.values():
+        for rev in item["reviews"]:
+            list_date.append(rev["date"])
+    return list_date
 
 def max_stock() -> tuple[int,int]:
     ident = -1
@@ -128,4 +137,52 @@ def reviews_rating(reviewer_name: str) -> float:
     return avg/len(revs)
 
 
+def id_with_title() -> dict[str,str]:
+    dict_title = {}
+    for item in DATA_ORIGINAL.values():
+        dict_title[item["id"]] = item["title"]
+    return dict_title
+
+
+def title_start_letter( letter: str) -> list[str]:
+    list_title = []
+    for item in DATA_ORIGINAL.values():
+        if item["title"][0] == letter.upper():
+            list_title.append(item["title"])
+    return list_title
+
+
+# Test Crud Users
+def read_all_users() -> list:
+    return list(DATA_USERS.values())
+
+def read_user(id : int) -> dict:
+    if id not in DATA_USERS:
+        raise KeyError("Dont found")
+    return DATA_USERS[id]
+
+def create_user(item:dict):
+    new_id = max(list(DATA_USERS.keys()))+1
+    item["id"] = new_id
+    DATA_USERS[new_id] = item
+    return DATA_USERS[new_id]
+
+def update_user(item:dict):
+    id = item["id"]
+    if id not in DATA_USERS:
+        raise KeyError("This item dont  exist")
+    else:
+        DATA_USERS[id] = item
+    return DATA_USERS[id]
+
+def delete_user(id:int):
+    return DATA_USERS.pop(id)
+
+
+def get_user_role(role :str) -> list:
+    list_role = []
+    for item in DATA_USERS.values():
+        if item["role"] == role:
+            list_role.append(item["firstName"])
+    return list_role
 
