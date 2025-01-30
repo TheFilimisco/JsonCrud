@@ -1,5 +1,5 @@
 from crud import (read_all, read_item, create, delete, update, avg_price,count_category, avg_rating, max_stock, low_stock, reviews, reviews_rating, count_tags,
-dates, id_with_title,title_start_letter,read_all_users,read_user,create_user,update_user,delete_user,get_user_role)
+dates, id_with_title,title_start_letter,read_all_users,read_user,create_user,update_user,delete_user,get_user_role,get_color_hair,get_color_total_hair)
 
 
 
@@ -82,6 +82,8 @@ for item in read_all_users():
 
 print(get_user_role("moderator"))
 
+print(get_color_hair("Gray"))
+print(get_color_total_hair("Gray"))
 
 
 

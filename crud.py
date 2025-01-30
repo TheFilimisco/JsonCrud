@@ -186,3 +186,17 @@ def get_user_role(role :str) -> list:
             list_role.append(item["firstName"])
     return list_role
 
+def get_color_hair(color_hair : str) -> list:
+    list_color_hair = []
+    for item in DATA_USERS.values():
+        if item["hair"]["color"] == color_hair:
+            list_color_hair.append(item["firstName"])
+    return list_color_hair
+
+def get_color_total_hair(color_hair : str) -> [str,int]:
+    accum = 0
+    for item in DATA_USERS.values():
+        if item["hair"]["color"] == color_hair:
+            accum+=1
+    return color_hair,accum
+
