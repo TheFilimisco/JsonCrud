@@ -3,13 +3,18 @@ from typing import List, Any
 from database import read_db
 
 
+
+#Read of Simplify products
 DATA_PATH = "../data/products_simplify.json"
 DATA = read_db(DATA_PATH,"products")
 
+#Read of Products Original
 DATA_PATH_ORIGINAL = "../data/products.json"
 DATA_ORIGINAL = read_db(DATA_PATH_ORIGINAL, "products")
 
 
+
+#Simplify Product
 def read_all() -> list:
     return list(DATA.values())
 
@@ -19,36 +24,32 @@ def read_item(item_id: dict) -> dict:
     return DATA[item_id]
 
 def create(item: dict):
-    add_id ={"id": len(DATA.keys())+1}
-    # new_id = max(list(DATA.keys())) + 1
-    add_id.update(item)
-    # item["id"] = len(DATA.keys())+1
-    DATA[len(DATA.keys())+1] = add_id
-
-    # DATA[new_id] = item
-
-    # save
-    return DATA[len(DATA.keys())]
-    # if item in DATA:
-    #     raise KeyError("This item exist!")
-    # else:
-    #     return DATA[item]
-    # item has no id
-    # add new item
-    #assign a id
-    #DATA[new_id] item
-
-def delete(id):
-    DATA.pop(id)
-    # del DATA[id]
-    return print("Successful")
+    #This Me
+    #add_id ={"id": len(DATA.keys())+1}
+    #add_id.update(item)
+    #DATA[len(DATA.keys())+1] = add_id
+    # Alberto did
+    new_id = max(list(DATA.keys())) + 1
+    item["id"] = len(DATA.keys()) + 1
+    DATA[new_id] = item
 
 def update(item):
+    #This me
     id = item["id"]
     if id not in DATA:
         raise KeyError("id not found")
-    DATA[id] = item
-    return DATA[id]
+    else:
+        #Print update Item
+        DATA[id] = item
+        return DATA[id]
+
+def delete(id):
+    #This Me
+    return DATA.pop(id)
+    #This alberto
+    # del DATA[id]
+    #return print("Successful")
+
 
 def avg_price():
     accum = 0
@@ -65,16 +66,26 @@ def count_category(category:str):
             counter+=1
     return counter
 
-# Sobre el original
+# About the original Data
 
-def avg_rating():
-    # counter = 0
-    # accum = 0
-    # for item in DATA_ORIGINAL.values():
-    #     accum+=item["rating"]
-    #     counter+=1
-    # return accum/counter
-    pass
+def count_tags() -> dict[str, int]:
+    tag_counter = {}
+    for item in DATA_ORIGINAL.values():
+        for tag in item["tags"]:
+            if tag in tag_counter:
+                tag_counter[tag] +=1
+            else:
+                tag_counter[tag] =1
+    return tag_counter
+
+def avg_rating() -> list[float]:
+    avgs = []
+    for item in DATA_ORIGINAL.values():
+        rating_avg = 0
+        for review in item["reviews"]:
+            rating_avg+= review["rating"]
+        avgs.append(rating_avg/len(item["reviews"]))
+    return avgs
 
 def max_stock() -> tuple[int,int]:
     ident = -1
@@ -89,15 +100,32 @@ def max_stock() -> tuple[int,int]:
 def low_stock(threshold: int) -> list[dict]:
     # items_simpl when stock <= threshold
     # return title, description, category, price, stock
-    pass
+    stocks = []
+    attributes = ["title","description","category","price","stock"]
+    for item in DATA_ORIGINAL.values():
+        if item["stock"] < threshold:
+            item_simp = {}
+            for attribute in attributes:
+                item_simp[attribute] = item[attribute]
+            stocks.append(item_simp)
+    return stocks
 
 def reviews(reviewer_name: str) -> list[dict]:
     # return a list of reviews by reviewer
-    pass
+    revs = []
+    for item in DATA_ORIGINAL.values():
+        for review in item["reviews"]:
+            if review["reviewerName"] == reviewer_name:
+                revs.append(review)
+    return revs
 
 def reviews_rating(reviewer_name: str) -> float:
     # return avg review ratings
-    pass
+    avg = 0
+    revs = reviews(reviewer_name)
+    for rev in revs:
+        avg += rev["rating"]
+    return avg/len(revs)
 
 
 
